@@ -1,0 +1,29 @@
+{
+  "recipes": {
+  },
+  "suggestions": {
+  },
+  "license": "Apache 2.0",
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
+  "conflicting": {
+  },
+  "dependencies": {
+  },
+  "providing": {
+  },
+  "description": "Installs and configures s3cmd",
+  "platforms": {
+  },
+  "maintainer": "Charles H Martin, PhD",
+  "version": "0.1",
+  "replacing": {
+  },
+  "maintainer_email": "charlesmartin14@gmail.com",
+  "groupings": {
+  },
+  "name": "s3cmd",
+  "recommendations": {
+  },
+  "attributes": {
+  }
+}

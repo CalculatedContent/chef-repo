@@ -1,0 +1,137 @@
+#!/bin/sh
+#
+# bloomd - high-performance C server which is used to expose bloom filters and
+#          operations over them to networked clients
+#
+# chkconfig:   - 20 80
+# description: Bloomd is a high-performance C server which is used to expose \
+#              bloom filters and operations over them to networked clients. \
+#              It uses a simple ASCI protocol which is human readable, and \
+#              similar to memcached. 
+
+
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+exec="/usr/sbin/bloomd"
+prog=$(basename $exec)
+
+[ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
+
+lockfile=/var/lock/subsys/$prog
+
+start() {
+    echo -n $"Starting $prog: "
+    daemon --user bloomd $exec -f /etc/bloomd.conf 1> /dev/null 2> /dev/null &
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    stop
+    start
+}
+
+case "$1" in
+    start|stop|restart)
+        $1
+        ;;
+    force-reload)
+        restart
+        ;;
+    status)
+        status $prog
+        ;;
+    try-restart|condrestart)
+        if status $prog >/dev/null ; then
+            restart
+        fi
+	;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|try-restart}"
+        exit 2
+esac
+
+###TODO::  fix
+
+
+#!/bin/sh
+#
+# Simple Redis init.d script conceived to work on Linux systems
+# as it does use of the /proc filesystem.
+#
+# description: Redis is an in memory key-value store database
+#
+
+
+REDISNAME=<%= @name %>
+REDISPORT=<%= @port %>
+<% case @platform %>
+<% when 'ubuntu','debian','fedora' %>
+EXEC="sudo -u <%= @user %> /usr/local/bin/redis-server <%= @configdir %>/${REDISNAME}.conf"
+<% else %> 
+EXEC="runuser <%= @user %> -c \"/usr/local/bin/redis-server <%= @configdir %>/${REDISNAME}.conf\""
+<% end %>
+CLIEXEC=/usr/local/bin/redis-cli
+
+<% connection_string = String.new %>
+<% if @unixsocket.nil? %> 
+  <% connection_string << " -p #{@port}" %>
+  <% connection_string << " -h #{@address}" if @address %>
+<% else %>
+  <% connection_string << " -s #{@unixsocket}" %>
+<% end %>
+<% connection_string  << " -a '#{@requirepass}'" unless @requirepass.nil? %>  
+
+PIDFILE=<%= @piddir %>/redis_${REDISNAME}.pid
+
+if [ ! -d <%= @piddir %> ]; then
+    mkdir -p <%= @piddir %>
+    chown <%= @user %>  <%= @piddir %>
+fi
+
+case "$1" in
+    start)
+        if [ -f $PIDFILE ]
+        then
+                echo "$PIDFILE exists, process is already running or crashed"
+        else
+                echo "Starting Redis server..."
+                eval $EXEC
+        fi
+        ;;
+    stop)
+        if [ ! -f $PIDFILE ]
+        then
+                echo "$PIDFILE does not exist, process is not running"
+        else
+                PID=$(cat $PIDFILE)
+                echo "Stopping ..."
+
+                <%= "$CLIEXEC #{connection_string} save" if @shutdown_save %>                 
+                $CLIEXEC <%= connection_string %> shutdown
+
+                while [ -x /proc/${PID} ]
+                do
+                    echo "Waiting for Redis to shutdown ..."
+                    sleep 1
+                done
+                echo "Redis stopped"
+        fi
+        ;;
+    *)
+        echo "Please use start or stop as first argument"
+        ;;
+esac
