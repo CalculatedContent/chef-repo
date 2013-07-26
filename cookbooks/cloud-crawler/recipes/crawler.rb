@@ -15,14 +15,15 @@ include_recipe 'redisio::enable'
 
 gem_package "bundler"
 
-git "/home/ubuntu/apps" do
+git "/home/ubuntu/cc" do
     repository "https://github.com/CalculatedContent/cloud-crawler.git"
     reference "master"
     action :sync
 end
 
+
 execute "crawler_install" do
-    command "cd /home/ubuntu/apps/cloud-crawler;
+    command "cd /home/ubuntu/cc/cloud-crawler;
     bundle install;gem build cloud-crawler.gemspec; gem install cloud-crawler*.gem"
     action :run
 end

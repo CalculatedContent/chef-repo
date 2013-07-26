@@ -1,8 +1,7 @@
-maintainer       "Example Com"
-maintainer_email "ops@example.com"
+maintainer       "Calculated Content"
+maintainer_email "charlesmartin14@gmail.com"
 license          "Apache 2.0"
 description      "Installs/Configures xapian"
-
 version          "0.1"
 depends           "build-essential"
 depends           "git"
