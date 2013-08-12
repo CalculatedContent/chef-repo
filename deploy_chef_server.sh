@@ -1,4 +1,11 @@
 #!/bin/bash 
+#
+# Copyright (c) 2013 Charles H Martin, PhD
+#  
+#  Calculated Content 
+#  http://calculatedcontent.com
+#  charles@calculatedcontent.com
+#
 #Pre-requisites:
 #You must create a security group with a rule allowing port 443 (HTTPS) and port 22(SSH) as this is 
 #what chef server >=11.x now uses, in the script below that security group is called chef_server_group

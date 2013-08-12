@@ -1,3 +1,10 @@
+#
+# Copyright (c) 2013 Charles H Martin, PhD
+#  
+#  Calculated Content 
+#  http://calculatedcontent.com
+#  charles@calculatedcontent.com
+#
 cloud-crawler Cookbook
 ======================
 TODO: Enter the cookbook description here.
