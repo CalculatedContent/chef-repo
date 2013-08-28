@@ -20,11 +20,12 @@ execute "logs" do
     action :run
 end
 
-execute "runWorker" do
-    command "cd /home/ubuntu/cc/cloud-crawler;
-    nohup sudo -E bundle exec /home/ubuntu/cc/cloud-crawler/bin/run_worker.rb -h \"#{master_ip_address}\" 2>&1 #{logfile} &" 
-    action :run
-end
+# should only start 1 time
+#execute "runWorker" do
+ #   command "cd /home/ubuntu/cc/cloud-crawler;
+#    nohup sudo -E bundle exec /home/ubuntu/cc/cloud-crawler/bin/run_worker.rb -h \"#{master_ip_address}\" 2>&1 #{logfile} &" 
+ #   action :run
+#xsend
 
 execute "whenever" do
     command "cd /home/ubuntu/cc/cloud-crawler; 
