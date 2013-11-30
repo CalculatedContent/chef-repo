@@ -38,6 +38,7 @@ end.run_action(:run) if node['build_essential']['compiletime']
   emacs
   htop
   xvfb
+  firefox
 }.each do |pkg|
 
   r = package pkg do
