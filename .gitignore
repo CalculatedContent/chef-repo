@@ -4,5 +4,6 @@
 *.pem
 *.project
 .chef
+.chef.bak
 *~
 \#.\#

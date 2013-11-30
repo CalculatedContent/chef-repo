@@ -37,6 +37,7 @@ end.run_action(:run) if node['build_essential']['compiletime']
   flex
   emacs
   htop
+  xvfb
 }.each do |pkg|
 
   r = package pkg do
