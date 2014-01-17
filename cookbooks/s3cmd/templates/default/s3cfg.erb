@@ -1,6 +1,6 @@
 [default]
-access_key = AKIAISQV7AEZSVW2IMBQ
-secret_key = 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
+access_key = <%= @params[:aws_access_key] %>   
+secret_key = <%= @params[:aws_secret_key] %> 
 acl_public = False
 bucket_location = US
 cloudfront_host = cloudfront.amazonaws.com

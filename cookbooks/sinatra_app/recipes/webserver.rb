@@ -19,10 +19,13 @@ include_recipe 'redisio::enable'
 
 
 name = node[:sinatra_app][:name]
+port = node[:sinatra_app][:port]
+
 # Create vhost
 
 web_app name do
   server_name name
+  server_port port
   docroot node[:sinatra_app][:docroot]
   template "sinatra_app.conf.erb"
   log_dir node[:apache][:log_dir]

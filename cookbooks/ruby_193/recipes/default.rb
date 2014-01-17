@@ -21,4 +21,7 @@ package "zlib1g-dev"
 package "libxslt-dev"
 package "libxml2-dev"
 
-gem_package "bundler"
+gem_package "bundler" do
+  version "1.3.6"
+  action :install
+end

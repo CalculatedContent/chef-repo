@@ -1,4 +1,6 @@
-<VirtualHost *:80>
+Listen <%= @params[:server_port] %> 
+NameVirtualHost *:<%= @params[:server_port] %>  
+<VirtualHost *:<%= @params[:server_port] %> >
     # ServerName <%= @params[:server_name] %>
     DocumentRoot <%= "#{@params[:docroot]}/#{@params[:server_name]}/current/public" %>
    
@@ -21,3 +23,4 @@
         
 </VirtualHost>
 
+  
