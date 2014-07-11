@@ -95,10 +95,10 @@ for z in roles/*rb; do knife role from file $z;done
 
 echo "knife[:aws_ssh_key_id] = \"$KEY_NAME\"">> .chef/knife.rb
 echo "knife[:identity_file] =\"$CHEF_PEM\"" >> .chef/knife.rb
-echo "knife[:aws_access_key_id]=\" #{ENV['AWS_ACCESS_KEY_ID']}\" "
-echo "knife[:aws_secret_access_key]=\"#{ENV['AWS_SECRET_ACCESS_KEY']}\" "
-echo "knife[:availability_zone]=\"#{ENV['EC2_AVAILABILITY_ZONE']}\" "
-echo "knife[:region]=\"#{ENV['EC2_REGION']}\" "
+echo "knife[:aws_access_key_id]=\"#{ENV['AWS_ACCESS_KEY_ID']}\" ">> .chef/knife.rb
+echo "knife[:aws_secret_access_key]=\"#{ENV['AWS_SECRET_ACCESS_KEY']}\" ">> .chef/knife.rb
+echo "knife[:availability_zone]=\"#{ENV['EC2_AVAILABILITY_ZONE']}\" ">> .chef/knife.rb
+echo "knife[:region]=\"#{ENV['EC2_REGION']}\" ">> .chef/knife.rb
 
 
 
