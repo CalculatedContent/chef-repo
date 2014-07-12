@@ -17,7 +17,7 @@ node[:s3cmd][:users].each do |user|
   
   template "s3cfg" do
       path "#{home}/.s3cfg"
-      source "s3cfg.erb"
+       source "s3cfg.erb"
       mode 0655
   end  
   
