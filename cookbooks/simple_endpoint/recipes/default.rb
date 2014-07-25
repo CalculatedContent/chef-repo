@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: simple_search
+# Cookbook Name:: simple_endpoint
 # Recipe:: default
 #
 # Copyright 2014, Calculated Content
