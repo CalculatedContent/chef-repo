@@ -5,6 +5,5 @@
 *.project
 .chef
 .chef.bak
-s3cfg.erb
 *~
 \#.\#
