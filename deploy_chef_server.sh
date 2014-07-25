@@ -8,7 +8,7 @@
 #
 #Pre-requisites:
 #You must create a security group with a rule allowing port 443 (HTTPS) and port 22(SSH) as this is 
-#what chef server >=11.x now uses, in the script below that security group is called chef_server_group
+#what chef server >=11.x now uses, in the script below that security group is called chefami
 #the security group can be created from the AWS web console or using the amazon supplied ec2-api-tools
 #
 # TDDO:
