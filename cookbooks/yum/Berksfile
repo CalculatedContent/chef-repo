@@ -1,8 +1,5 @@
-site :opscode
+source 'http://api.berkshelf.com'
 
 metadata
 
-group :integration do
-  cookbook "minitest-handler"
-  cookbook "yum_test", :path => "./test/cookbooks/yum_test"
-end
+cookbook 'yum_test', path: 'test/fixtures/cookbooks/yum_test'
