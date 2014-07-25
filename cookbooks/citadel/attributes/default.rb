@@ -17,7 +17,7 @@
 #
 
 # Default S3 bucket to use for Citadel data
-default['citadel']['bucket'] = 'shoppertrak.demo'
+default['citadel']['bucket'] = ''
 
 # Override these for use in Vagrant or other development environments
 default['citadel']['access_key_id'] = nil
