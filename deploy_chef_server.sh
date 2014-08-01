@@ -136,16 +136,18 @@ touch .chef/knife.rb
 echo "The password you enter cannot be empty and must be at least 6 characters long"
 knife configure  -i -u $CHEF_USER -y -s "https://$ip_address" -k ".chef/$USER.pem"  --admin-client-key .chef/admin.pem --admin-client-name "admin" --validation-client-name chef-validator --validation-key .chef/chef-validator.pem --repository . -c .chef/knife.rb
 
-echo "Uploading all existing cookbooks and roles:"
-knife cookbook upload -a
-for z in roles/*rb; do knife role from file $z;done
-
-echo "knife[:aws_ssh_key_id] = \"$KEY_NAME\"">> .chef/knife.rb
+echo -n "Configuring knife in .chef/knife.rb ... "
+echo "knife[:aws_ssh_key_id] = \"$KEY_NAME\"" >> .chef/knife.rb
 echo "knife[:identity_file] =\"$CHEF_PEM\"" >> .chef/knife.rb
 echo "knife[:aws_access_key_id]=\"#{ENV['AWS_ACCESS_KEY_ID']}\"" >> .chef/knife.rb
 echo "knife[:aws_secret_access_key]=\"#{ENV['AWS_SECRET_ACCESS_KEY']}\"" >> .chef/knife.rb
 echo "knife[:availability_zone]=\"#{ENV['EC2_AVAILABILITY_ZONE']}\"" >> .chef/knife.rb
 echo "knife[:region]=\"#{ENV['EC2_REGION']}\"" >> .chef/knife.rb
+echo "OK"
+
+echo "Uploading all existing cookbooks and roles:"
+knife cookbook upload -a
+for z in roles/*rb; do knife role from file $z;done
 
 echo "You should now be able to bootstrap new nodes with 'knife ec2 server create' directly from the shell"
 echo "Login to the chef server webUI at https://$ip_address using username admin and password p@ssw0rd1 and immediately change the password"
