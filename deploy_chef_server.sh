@@ -49,7 +49,6 @@ if [ $? != 0 ]
 then
 	echo "ERROR: knife did NOT work. AWS key not properly configured?"
 fi
-exit
 #see here for how to create a security group in ruby:
 #https://github.com/fnichol/knife-server/blob/master/lib/knife/server/ec2_security_group.rb
 #knife server plugin would allow us to do everything with just this command, but it doesn't work, I've filed an issue on github already
@@ -57,11 +56,13 @@ exit
 
 if [ -f instance_info ]
 then
+    echo "removing old instance_info file"
     rm "instance_info"
 fi
 
 #
 ##Create an instance on which to run chef server and store the generated public IP in a hacky way
+echo "trying to create instance of chef-server"
 knife ec2 server create -N "chef-server" -x ubuntu -I $AMI_ID  -f $INSTANCE_TYPE -k $KEY_NAME --ssh-key $KEY_FILE  -G $SECURITY_GROUPS | tee instance_info
 ip_address=`cat instance_info | awk -F : '/Public IP/{gsub(/[ \t]/,"",$2);print $2 }' | tail -n 1`
 host_name=`cat instance_info | awk -F : '/Public DNS/{gsub(/[ \t]/,"",$2);print $2 }' | tail -n 1`
