@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash  -x
 #
 # Copyright (c) 2013 Charles H Martin, PhD
 #  

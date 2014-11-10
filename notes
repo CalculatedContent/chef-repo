@@ -4,3 +4,12 @@
 4.  chef setp should create security groups needed if they are specified
     i can get this to work
 
+---
+new bootstrap method: needs knife.rb
+knife server bootstrap ec2 --node-name bootstrap --image ami-d70c2892
+
+
+new ubuntu ami
+Ubuntu 14.04.1 LTS 
+http://cloud-images.ubuntu.com/trusty/current/
+ami-03b3a746

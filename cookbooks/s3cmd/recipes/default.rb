@@ -7,8 +7,10 @@ package "git-core"
 package "python-setuptools"
 package "python-dateutil"
 
-chef_gem "httparty"
-chef_gem "json"
+# can not use ruby gems with nativ extensions in chef_gem because ubuntu build_essentials (make) is not present yet
+#chef_gem "httparty"
+#
+chef_gem "json_pure"
 
 directory "/usr/local/share/s3cmd" do
   action :create
@@ -47,13 +49,16 @@ node[:s3cmd][:users].each do |user|
 
   if access_key.empty? then
     # access keys not specified in attributes, get the temporary ones through IAM roles (if one was associated to the instance)
-    require 'httparty'
+    require 'http'
     access_key = "getting IAM role"
-    iam_role = HTTParty.get("http://169.254.169.254/latest/meta-data/iam/security-credentials/").body
+    
+    #iam_role = HTTParty.get("http://169.254.169.254/latest/meta-data/iam/security-credentials/").body
+    iam_role = Net::HTTP.get_response(URI("http://169.254.169.254/latest/meta-data/iam/security-credentials/")).body
     if !iam_role.empty? then
       access_key = "getting IAM role keys"
-      require 'json'
-      credentials = JSON.parse(HTTParty.get("http://169.254.169.254/latest/meta-data/iam/security-credentials/#{iam_role}").body)
+      require 'json/pure'
+#      credentials = JSON.parse(HTTParty.get("http://169.254.169.254/latest/meta-data/iam/security-credentials/#{iam_role}").body)
+      credentials = JSON.parse(Net::HTTP.get_response(URI("http://169.254.169.254/latest/meta-data/iam/security-credentials/#{iam_role}")).body)
       access_key = credentials['AccessKeyId']
       secret_key = credentials['SecretAccessKey']
       access_token = credentials['Token']
