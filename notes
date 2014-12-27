@@ -1,3 +1,8 @@
+
+
+
+---
+
 1.  knife.rb  should use ENV VARS in knife file, not explicit values
 2.  knife.rb needs security zone
 3.  chef setup and other scripts should switch / choose ami based on security zone, and set these ami values somewhere
