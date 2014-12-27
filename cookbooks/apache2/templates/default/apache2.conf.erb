@@ -8,12 +8,17 @@ ServerRoot "<%= node['apache']['dir'] %>"
 #
 # The accept serialization lock file MUST BE STORED ON A LOCAL DISK.
 #
+# http://askubuntu.com/questions/368515/upgraded-to-ubuntu-13-10-apache-not-able-to-start
+#
 <% if %w{debian}.include?(node['platform_family']) -%>
-LockFile /var/lock/apache2/accept.lock
+#LockFile /var/lock/apache2/accept.lock
+Mutex /var/lock/apache2 default
 <% elsif %w{freebsd}.include?(node['platform_family']) -%>
-LockFile /var/log/accept.lock
+#LockFile /var/log/accept.lock
+Mutex /var/log default
 <% else %>
-LockFile logs/accept.lock
+#LockFile logs/accept.lock
+Mutex logs default
 <% end -%>
 
 #
