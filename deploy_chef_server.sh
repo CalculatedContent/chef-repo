@@ -1,4 +1,6 @@
-#!/bin/bash  -x
+#!/bin/bash  
+set -x
+trap read debug
 #
 # Copyright (c) 2013 Charles H Martin, PhD
 #  
@@ -22,7 +24,8 @@ KEY_FILE=$CHEF_PEM #the path to your AWS key
 
 SECURITY_GROUPS="chefami" #group you created with port 22 and 443 open
 INSTANCE_TYPE="m1.small" #Note that at least a small is recommended currently
-AMI_ID=$CHEF_AMI_ID #AMI you wish to use- must be available in your region
+AMI_ID="ami-696e652c" 
+#AMI_ID=$CHEF_AMI_ID #AMI you wish to use- must be available in your region
 NODE_NAME="chefami" #A descriptive name that will appear in knife ec2 server list output
 
 echo "NOTE: Pay attention as this script runs- you will be prompted to enter a password at one point"
@@ -63,9 +66,10 @@ fi
 #
 ##Create an instance on which to run chef server and store the generated public IP in a hacky way
 echo "trying to create instance of chef-server"
-knife ec2 server create -N "chef-server" -x ubuntu -I $AMI_ID  -f $INSTANCE_TYPE -k $KEY_NAME --ssh-key $KEY_FILE  -G $SECURITY_GROUPS | tee instance_info
+knife ec2 server create -N "chef-server" -x ubuntu -I $AMI_ID  -f $INSTANCE_TYPE -k $KEY_NAME --ssh-key $KEY_FILE  -G $SECURITY_GROUPS --hint ec2 -a public_ip_address     | tee instance_info
 ip_address=`cat instance_info | awk -F : '/Public IP/{gsub(/[ \t]/,"",$2);print $2 }' | tail -n 1`
 host_name=`cat instance_info | awk -F : '/Public DNS/{gsub(/[ \t]/,"",$2);print $2 }' | tail -n 1`
+cat instance_info
 
 if [ -f instance_info ]
 then
@@ -107,6 +111,7 @@ fi
 #NOTE: the FQDN must be set properly before you do chef-server-ctl reconfigure
 #disable StrictHostKeyChecking on the first connection attempt to avoid (yes/no) prompt
 ssh -oStrictHostKeyChecking=no -i $KEY_FILE ubuntu@$ip_address "echo $host_name > /etc/hostname" 
+echo "TODO (bug with Ubuntu 14.04): modifying hostname above might have failed. Log on the server and change it by hand (use root, sudo will not work)"
 
 ssh -i $KEY_FILE ubuntu@$ip_address "sudo hostname -F /etc/hostname"
 ssh -i $KEY_FILE ubuntu@$ip_address "sudo echo $ip_address $host_name >> /etc/hosts"
