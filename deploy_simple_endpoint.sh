@@ -7,8 +7,8 @@
 #  charles@calculatedcontent.com
 #
 
-#AMI_ID="ami-a26265e7"   # "ami-a26265e7" Ubuntu 14.04 LTS (Trusty Tahr)
-AMI_ID="ami-d70c2892"   # "ami-d70c2892" Ubuntu 12.04 LTS (Precise Pangolin)
+AMI_ID="ami-a26265e7"   # "ami-a26265e7" Ubuntu 14.04 LTS (Trusty Tahr)
+#AMI_ID="ami-d70c2892"   # "ami-d70c2892" Ubuntu 12.04 LTS (Precise Pangolin)
                         
 INSTANCE_TYPE="t1.micro"
 SECURITY_GROUPS="chefami"

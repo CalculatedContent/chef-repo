@@ -1,7 +1,9 @@
 Listen <%= @params[:server_port] %> 
 NameVirtualHost *:<%= @params[:server_port] %>  
 <VirtualHost *:<%= @params[:server_port] %> >
-    # ServerName <%= @params[:server_name] %>
+    # ServerName <%= @params[:server_name] %>  
+    #  ... or we can use something llike test.184.169.230.147.xip.io  if we know the ip
+
     DocumentRoot <%= "#{@params[:docroot]}/#{@params[:server_name]}/current/public" %>
    
     # Log details
@@ -10,10 +12,9 @@ NameVirtualHost *:<%= @params[:server_port] %>
     CustomLog <%= @node[:apache][:log_dir] %>/access-<%= @params[:server_name] %>.log combined
     
     <Directory <%= "#{@params[:docroot]}/#{@params[:server_name]}/current/public" %>>
-        Options FollowSymLinks -MultiViews
+        Options -Indexes +FollowSymLinks +MultiViews
         AllowOverride All
-        Order allow,deny
-        Allow from all
+        Require all granted
     </Directory>
     
      

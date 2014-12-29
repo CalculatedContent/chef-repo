@@ -11,6 +11,7 @@ package "python-dateutil"
 #chef_gem "httparty"
 #
 chef_gem "json_pure"
+chef_gem "http"
 
 directory "/usr/local/share/s3cmd" do
   action :create
