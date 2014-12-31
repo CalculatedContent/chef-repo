@@ -15,15 +15,17 @@ if !node['sinatra_app']['deploy_key'].empty? then
 end
 
 if use_ssh then
+ 
+ 
+ # citadel not working
+ # deploy_key_path = "#{node[:sinatra_app][:deploy_dir]}/#{node['sinatra_app']['deploy_key']}"
 
-  deploy_key_path = "#{node[:sinatra_app][:deploy_dir]}/#{node['sinatra_app']['deploy_key']}"
-
-  file deploy_key_path do
-    content citadel["#{node['sinatra_app']['deploy_key']}"]
-    user node[:apache][:user]
-    group node[:apache][:group]
-    mode '600'
-  end
+ # file deploy_key_path do
+ #   content citadel["#{node['sinatra_app']['deploy_key']}"]
+ #   user node[:apache][:user]
+ #   group node[:apache][:group]
+ #   mode '600'
+ # end
 
   template "git_ssh_wrapper" do
       path "#{node[:sinatra_app][:deploy_dir]}/git_ssh_wrapper.sh"

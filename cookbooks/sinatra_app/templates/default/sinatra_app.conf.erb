@@ -11,7 +11,7 @@ Listen <%= @params[:server_port] %>
     CustomLog <%= @node[:apache][:log_dir] %>/access-<%= @params[:server_name] %>.log combined
     
     <Directory <%= "#{@params[:docroot]}/#{@params[:server_name]}/current/public" %>>
-        Options -Indexes +FollowSymLinks +MultiViews
+        Options -Indexes +FollowSymLinks -MultiViews
         AllowOverride All
         Require all granted
     </Directory>
